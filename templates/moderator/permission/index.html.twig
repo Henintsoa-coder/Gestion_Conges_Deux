@@ -13,6 +13,7 @@
                 <th>Date debut</th>
                 <th>Date fin</th>
                 <th>Motif</th>
+                <th>Visée</th>
                 <th>Etat</th>
                 <th>Created_at</th>
                 <th>actions</th>
@@ -29,6 +30,7 @@
                 <td>{{ permission.dateDebut ? permission.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.dateFin ? permission.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.motif }}</td>
+                <td>{{ permission.vue ? 'Oui' : 'Non' }}</td>
                 <td>
                     {% if permission.etat is same as(null) %}
                         <div class="alert alert-info" style="text-align:center">

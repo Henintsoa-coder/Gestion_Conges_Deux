@@ -14,9 +14,6 @@ class AdminPermissionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date_debut')
-            ->add('date_fin')
-            ->add('motif')
             ->add('etat', null, [
                 'label' => 'Valider la demande ?'
             ])

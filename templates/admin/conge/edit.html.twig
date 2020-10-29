@@ -18,15 +18,30 @@
                     </tr>
                     <tr>
                         <th>Nom</th>
-                        <td>{{ conge.utilisateur.nom }}</td>
-                    </tr>
-                    <tr>
-                        <th>Prenom</th>
-                        <td>{{ conge.utilisateur.prenom }}</td>
+                        <td>
+                            {{ conge.utilisateur.nom }}
+                            {{ conge.utilisateur.prenom }}
+                        </td>
                     </tr>
                     <tr>
                         <th>Fonction</th>
                         <td>{{ conge.utilisateur.fonction }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date début</th>
+                        <td>{{ conge.dateDebut ? conge.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
+                     </tr>
+                    <tr>
+                        <th>Date fin</th>
+                        <td>{{ conge.dateFin ? conge.dateFin|date('d-m-Y H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Motif</th>
+                        <td>{{ conge.motif }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre de jours de congés restants</th>
+                        <td>{{ conge.utilisateur.nbConges| number_format(1, ',', ' ') }}</td>
                     </tr>
                     <tr>
                         <th>Contact</th>
@@ -37,18 +52,7 @@
                             {{ conge.utilisateur.email }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>Date_debut</th>
-                        <td>{{ conge.dateDebut ? conge.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
-                     </tr>
-                    <tr>
-                        <th>Date_fin</th>
-                        <td>{{ conge.dateFin ? conge.dateFin|date('d-m-Y H:i:s') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Motif</th>
-                        <td>{{ conge.motif }}</td>
-                    </tr>
+                    
                     <tr>
                         <th>
                             <p style="padding-top:11px;"> 

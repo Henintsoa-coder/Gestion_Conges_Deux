@@ -3,7 +3,7 @@
 {% block title %}Permission index{% endblock %}
 
 {% block body %}
-    <h1 class="mt-4">Permission index</h1>
+    <h1 class="mt-5 mb-5" style="text-align:center">Liste des demandes de permission.</h1>
 
     <table class="table">
         <thead>
@@ -13,6 +13,7 @@
                 <th>Date debut</th>
                 <th>Date fin</th>
                 <th>Motif</th>
+                <th>Visée</th>
                 <th>Etat</th>
                 <th>Created_at</th>
                 <th>actions</th>
@@ -29,6 +30,7 @@
                 <td>{{ permission.dateDebut ? permission.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.dateFin ? permission.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.motif }}</td>
+                <td>{{ permission.vue ? 'Oui' : 'Non' }}</td>
                 <td>
                     {% if permission.etat is same as(null) %}
                         <div class="alert alert-info" style="text-align:center">
@@ -44,10 +46,12 @@
                         </div>
                     {% endif %}
                 </td>
-                <td>{{ permission.createdAt ? permission.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ permission.createdAt ? permission.createdAt|date('d-m-Y') : '' }}</td>
                 <td>
                     <a href="{{ path('admin_permission_show', {'id': permission.id}) }}" target="parent" class="btn btn-primary btn-block">Voir</a>
+                    {#% if permission.etat is same as(null) or permission.etat == 0 %#}
                     <a href="{{ path('admin_permission_edit', {'id': permission.id}) }}" target="parent" class="btn btn-warning btn-block" style="color:white;">Editer</a>
+                    {#% endif %#}
                 </td>
             </tr>
         {% else %}

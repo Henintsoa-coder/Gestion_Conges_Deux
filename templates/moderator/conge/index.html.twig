@@ -21,6 +21,7 @@
                             <th>Date de debut</th>
                             <th>Date de fin</th>
                             <th>Motif</th>
+                            <th>Visée</th>
                             <th>Etat</th>
                             <th>Créée le</th>
                             <th>Actions</th>
@@ -37,6 +38,7 @@
                             <td>{{ conge.dateDebut ? conge.dateDebut|date('d/m/Y H:i:s') : '' }}</td>
                             <td>{{ conge.dateFin ? conge.dateFin|date('d/m/Y H:i:s') : '' }}</td>
                             <td>{{ conge.motif }}</td>
+                            <td>{{ conge.vue ? 'Oui' : 'Non' }}</td>
                             <td>
                                 {% if conge.etat is same as(null) %}
                                     <div class="alert alert-info" style="text-align:center;">

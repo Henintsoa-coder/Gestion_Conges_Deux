@@ -24,7 +24,7 @@ class AdminPermissionController extends AbstractController
     public function index(PermissionRepository $permissionRepository): Response
     {
         return $this->render('admin/permission/index.html.twig', [
-            'permissions' => $permissionRepository->findAllDESC(),
+            'permissions' => $permissionRepository->findAllViseeDESC(),
         ]);
     }
 
@@ -66,13 +66,14 @@ class AdminPermissionController extends AbstractController
      */
     public function edit(Request $request, Permission $permission): Response
     {
+        $former_permission_etat= $permission->getEtat();
         /** 
          * Si la permission a déjà été acceptée, on ne fait plus la différence avec le nombre de permissions de l'utilisateur. 
          * nb_total_permissions est donc égal à 0. :-) :-)
          * Si la permission n'a pas été acceptée, on calcule le nombre de jours que l'utilisateur demande.
          * Si l'état a été changé à true (si le congé a été accepté), on effectue la soustraction avec le nombre total de permissions restant.
          * */
-        if ($permission->getEtat() == true) {
+        /*if ($permission->getEtat() == true) {
             $nb_total_permissions = 0;
             return $this->redirectToRoute("admin_permission_index");
             dump($permission->getEtat());
@@ -85,7 +86,7 @@ class AdminPermissionController extends AbstractController
             $nbHeuresPermissions = intval($timePermission->h)/8;
 
             $nb_total_permissions = $nbJoursPermissions + $nbHeuresPermissions;
-        }
+        }*/
 
         $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['id' => $permission->getUtilisateur()]);
         //dump($user);
@@ -95,11 +96,59 @@ class AdminPermissionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             /**
+             * Ancien code
              * Si l'état de la demande de congé passe de null (ou false) à true, 
              * l'intervalle de temps représentant le congé demandé sera soustrait au nombre de congés restants.
              */
-            if ($permission->getEtat() === true) {
+            /*if ($permission->getEtat() === true) {
                 $user->setNbPermissions($user->getNbPermissions() - $nb_total_permissions);
+            }*/
+
+            /**
+             * Si l'état de la demande de congé passe de null (ou false) à true, 
+             * l'intervalle de temps représentant le congé demandé sera soustrait au nombre de congés restants.
+             */
+            if($former_permission_etat === null) {
+                if ($permission->getEtat() === true) {
+                  $timePermission = date_diff($permission->getDateDebut(), $permission->getDateFin());
+            
+                    $nbJoursPermission = intval($timePermission->format('%d'));
+            
+                    $nbHeuresPermission = intval($timePermission->h)/8;
+            
+                    $nb_total_permissions = $nbJoursPermission + $nbHeuresPermission;
+                        
+                   $user->setNbPermissions($user->getNbPermissions() - $nb_total_permissions);
+                }
+            } elseif($former_permission_etat === true) {
+               // /!\ Peut être retiré !
+                if ($permission->getEtat() === true) {
+                   $user->setNbPermissions($user->getNbPermissions());
+                }
+                
+                if ($permission->getEtat() === false) {
+                    $timePermission = date_diff($permission->getDateDebut(), $permission->getDateFin());
+            
+                    $nbJoursPermission = intval($timePermission->format('%d'));
+            
+                    $nbHeuresPermission = intval($timePermission->h)/8;
+            
+                    $nb_total_permissions = $nbJoursPermission + $nbHeuresPermission;
+                       
+                    $user->setNbPermissions($user->getNbPermissions() + $nb_total_permissions);
+                }
+            } elseif ($former_permission_etat === false){
+                if ($permission->getEtat() === true) {
+                    $timePermission = date_diff($permission->getDateDebut(), $permission->getDateFin());
+        
+                    $nbJoursPermission = intval($timePermission->format('%d'));
+        
+                    $nbHeuresPermission = intval($timePermission->h)/8;
+        
+                    $nb_total_permissions = $nbJoursPermission + $nbHeuresPermission;
+                
+                    $user->setNbPermissions($user->getNbPermissions() - $nb_total_permissions);
+                }
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -107,7 +156,7 @@ class AdminPermissionController extends AbstractController
             return $this->redirectToRoute('admin_permission_index');
         }
 
-        return $this->render('permission/edit.html.twig', [
+        return $this->render('admin/permission/edit.html.twig', [
             'permission' => $permission,
             'form' => $form->createView(),
         ]);

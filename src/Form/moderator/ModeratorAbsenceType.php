@@ -4,6 +4,7 @@ namespace App\Form\moderator;
 
 use App\Entity\Absence;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,12 +13,16 @@ class ModeratorAbsenceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date_debut')
+           /* ->add('date_debut')
             ->add('date_fin')
             ->add('motif')
+            */
             ->add('vue', null, [
                 'label' => 'Vu ?'
             ])
+            /*->add('image', FileType::class, [
+                'label' => 'pièce jointe'
+            ])*/
             /*->add('created_at')
             ->add('utilisateur')*/
         ;

@@ -30,10 +30,15 @@
                 <td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ absence.motif }}</td>
                 <td>{{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td></td>
                 <td>
-                    <a href="{{ path('absence_show', {'id': absence.id}) }}">Voir</a>
-                    <!-- a href="{{ path('absence_edit', {'id': absence.id}) }}">edit</a -->
+                    <!--Afficher la pièce jointe ici -->
+                    {% if absence.filename %}
+                        <img src="/images/piecesJointes/{{ absence.filename}}" alt="" width="80" height="80">
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('admin_absence_show', {'id': absence.id}) }}" class="btn btn-primary">Voir</a>
+                    <a href="{{ path('admin_absence_edit', {'id': absence.id}) }}" class="btn btn-success">Editer</a>
                 </td>
             </tr>
         {% else %}

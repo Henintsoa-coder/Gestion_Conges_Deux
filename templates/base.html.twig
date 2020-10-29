@@ -67,7 +67,9 @@
                             <a class="dropdown-item" href="{{ path('admin_absence_index') }}">Données abscence.</a>
                         </div>
                     </li>
-                    
+                {% endif %}
+
+                {% if is_granted("ROLE_MODO") %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Utilisateurs

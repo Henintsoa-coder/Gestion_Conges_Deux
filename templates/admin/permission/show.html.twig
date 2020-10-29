@@ -11,13 +11,20 @@
                 <th>Id</th>
                 <td>{{ permission.id }}</td>
             </tr>
+            <tr>²
+                <th>Nom de l'utilisateur</th>
+                <td>
+                    {{ conge.utilisateur.nom }} <br>   
+                    {{ conge.utilisateur.prenom }}
+                </td>
+             </tr>
             <tr>
                 <th>Date_debut</th>
-                <td>{{ permission.dateDebut ? permission.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ permission.dateDebut ? permission.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Date_fin</th>
-                <td>{{ permission.dateFin ? permission.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ permission.dateFin ? permission.dateFin|date('d-m-Y H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Motif</th>

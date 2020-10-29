@@ -5,9 +5,13 @@ namespace App\Entity;
 use App\Repository\AbsenceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=AbsenceRepository::class)
+ * @Vich\Uploadable
  */
 class Absence
 {
@@ -49,11 +53,25 @@ class Absence
      */
     private $vue;
 
+
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "application/pdf"})
+     * @var File|null
+     * 
+     * @Vich\UploadableField(mapping="pieces_jointes", fileNameProperty="filename")
      */
-    private $image;
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
+    
 
 
     public function getId(): ?int
@@ -126,21 +144,62 @@ class Absence
         return $this->vue;
     }
 
-    public function setVisee(?bool $vue): self
+    public function setVue(?bool $vue): self
     {
         $this->vue = $vue;
 
         return $this;
     }
 
-    public function getImage()
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile): self
     {
-        return $this->image;
+        $this->imageFile = $imageFile;
+
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
     }
 
-    public function setImage($image)
+    /**
+     * @return null|File
+     */
+    public function getImageFile(): ?File
     {
-        $this->image = $image;
+        return $this->imageFile;
+    }
+
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(?string $filename): self
+    {
+        $this->filename = $filename;
 
         return $this;
     }

@@ -23,7 +23,7 @@ class AbsenceController extends AbstractController
     public function index(AbsenceRepository $absenceRepository): Response
     {
         return $this->render('absence/index.html.twig', [
-            'absences' => $absenceRepository->findAll(),
+            'absences' => $absenceRepository->findByUtilisateurId($this->getUser()?$this->getUser()->getId():'')
         ]);
     }
 
@@ -37,27 +37,7 @@ class AbsenceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $image */
-            $file = $absence->getImage();
-
-            // this condition is needed because the 'image' field is not required
-            // so the image must be processed only when an image is uploaded
-            if ($file) {
-                $fileName = $fileName = md5(uniqid()).'.'.$file->guessExtension();
-
-                //Move the file to the directory where Images are stored
-                try {
-                    $file->move(
-                        $this->getParameter('images_directory'),
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                $absence->setImage($fileName);     
-            }
-
+            dump($absence);
             $absence->setCreatedAt(new DateTime());
             $absence->setUtilisateur($this->getUser());
 

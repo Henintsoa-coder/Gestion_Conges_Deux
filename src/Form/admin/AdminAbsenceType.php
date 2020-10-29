@@ -12,9 +12,6 @@ class AdminAbsenceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date_debut')
-            ->add('date_fin')
-            ->add('motif')
             ->add('vue', null, [
                 'label' => 'Vu ?'
             ])

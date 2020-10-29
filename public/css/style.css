@@ -12,3 +12,10 @@
     padding-bottom:11px; 
     text-align:center
 }
+
+/*section*/
+.card-shadow {
+    background: white;
+    box-shadow: 2px 2px 12px gray; 
+    border-radius: 20px;
+}

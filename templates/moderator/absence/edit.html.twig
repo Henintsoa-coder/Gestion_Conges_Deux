@@ -3,11 +3,59 @@
 {% block title %}Edit Absence{% endblock %}
 
 {% block body %}
-    <h1>Edit Absence</h1>
+    <div class="mb-4">
+        <h1 class="mt-4 mb-4">Edit Absence</h1>
+        <table class="table">
+            <tr>
+                <th>Id absence</th>
+                <td>{{ absence.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>
+                    {{ absence.utilisateur.nom }} <br>
+                    {{ absence.utilisateur.prenom }}
+                </td>
+            </tr>
+            <tr>
+                <th>Fonction</th>
+                <td>{{ absence.utilisateur.fonction }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>
+                 {% if absence.utilisateur.telephone != (null) %} 
+                      {{ absence.utilisateur.telephone }} -
+                  {% endif %}
+                  {{ absence.utilisateur.email }}
+                </td>
+             </tr>
+            <tr>
+                <th>Date début</th>
+                <td>{{ absence.dateDebut ? absence.dateDebut | date('d/m/Y H:i:s') }}</td>
+            </tr>        
+            <tr>
+                <th>Date fin</th>
+                <td>{{ absence.dateFin ? absence.dateFin | date('d/m/Y H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ absence.motif }}</td>
+            </tr>
+        </table>
+        
+        <p style="text-align:center;">
+            {% if absence.filename %}
+                <img src="/images/piecesJointes/{{ absence.filename}}" alt="" style="width:46%;">
+            {% endif %}
+        </p>    
+            
 
-    {{ include('absence/_form.html.twig', {'button_label': 'Update'}) }}
+        
+        {{ include('moderator/absence/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('absence_index') }}">back to list</a>
+        <a href="{{ path('moderator_absence_index') }}">Revenir à la liste des absences</a>
 
-    {{ include('absence/_delete_form.html.twig') }}
+        {#{ include('absence/_delete_form.html.twig') }#}
+    </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Absence index{% endblock %}
 
 {% block body %}
-    <h1 class="mt-2">Absences</h1>
+    <h1 class="mt-4">Mes absences</h1>
 
     <table class="table">
         <thead>
@@ -15,6 +15,7 @@
                 <th>Motif</th>
                 <th>Etat</th>
                 <th>Created_at</th>
+                <th>Pièce jointe</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -30,10 +31,26 @@
                 <td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ absence.motif }}</td>
                 <td>
-                    {{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}
+                    {% if (absence.vue == true) %}
+                        <div class="alert alert-success" style = "text-align:center">
+                            Vue.
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info" style = "text-align:center">
+                            Non vue !
+                        </div>
+                    {% endif %}
                 </td>
                 <td>{{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
+                    {% if absence.filename %}
+                        <img src="/images/piecesJointes/{{ absence.filename}}" alt="" width="80" height="80">
+                    {% endif %}
+                </td>
+                <td>
+                    {#% if ((absence.vue == false) or (absence.vue == null)) %}
+                        
+                    {% endif %#}
                     <a href="{{ path('absence_show', {'id': absence.id}) }}">show</a>
                     <a href="{{ path('absence_edit', {'id': absence.id}) }}">edit</a>
                 </td>
@@ -46,5 +63,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('absence_new') }}">Create new</a>
+    <a href="{{ path('absence_new') }}" class="btn btn-primary">Déclarer une nouvelle absence</a>
 {% endblock %}

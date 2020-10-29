@@ -21,6 +21,7 @@
                             <th>Date de debut</th>
                             <th>Date de fin</th>
                             <th>Motif</th>
+                            <th>Visée</th>
                             <th>Etat</th>
                             <th>Créée le</th>
                             <th>Actions</th>
@@ -37,6 +38,7 @@
                             <td>{{ conge.dateDebut ? conge.dateDebut|date('d/m/Y H:i:s') : '' }}</td>
                             <td>{{ conge.dateFin ? conge.dateFin|date('d/m/Y H:i:s') : '' }}</td>
                             <td>{{ conge.motif }}</td>
+                            <td>{{ conge.vue ? 'Oui' : 'Non' }}</td>
                             <td>
                                 {% if conge.etat is same as(null) %}
                                     <div class="alert alert-info" style="text-align:center;">
@@ -55,9 +57,9 @@
                             <td>{{ conge.createdAt ? conge.createdAt|date('d-m-Y') : '' }}</td>
                             <td>
                                 <a href="{{ path('admin_conge_show', {'id': conge.id}) }}" class="btn btn-primary btn-block"  target="parent">Voir</a>
-                                {% if conge.etat is same as(null) or conge.etat == 0 %}
+                                {#% if conge.etat is same as(null) or conge.etat == 0 %#}
                                 <a href="{{ path('admin_conge_edit', {'id': conge.id}) }}" class="btn btn-warning btn-block"  style="color:white;" target="parent">Editer</a>
-                                {% endif %}
+                                {#% endif %#}
                                 <!--a href="" class="btn btn-info btn-block">Accepter</a>
                                 <a href="" class="btn btn-danger btn-block">Refuser</a-->
                             </td>

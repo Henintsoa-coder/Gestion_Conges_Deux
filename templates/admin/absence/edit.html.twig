@@ -4,7 +4,30 @@
 
 {% block body %}
     <h1>Edit Absence</h1>
-
+        
+    <table class="table">
+        <tr>
+            <th>Id absence</th>
+            <td>{{ absence.id }}</td>
+        </tr>
+        <tr>
+             <th>Date début</th>
+             <td>{{ absence.dateDebut ? absence.dateDebut | date('d/m/Y H:i:s') }}</td>
+        </tr>        
+        <tr>
+            <th>Date fin</th>
+            <td>{{ absence.dateFin ? absence.dateFin | date('d/m/Y H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Motif</th>
+            <td>{{ absence.motif }}</td>
+        </tr>
+    </table>
+    <p style="text-align:center;">
+        {% if absence.filename %}
+            <img src="/images/piecesJointes/{{ absence.filename}}" alt="" style="width:72%;">
+        {% endif %}
+    </p>
     {{ include('absence/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
     <a href="{{ path('absence_index') }}">back to list</a>

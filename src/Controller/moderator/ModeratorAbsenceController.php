@@ -68,7 +68,8 @@ class ModeratorAbsenceController extends AbstractController
     {
         $form = $this->createForm(ModeratorAbsenceType::class, $absence);
         $form->handleRequest($request);
-
+        dump($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 

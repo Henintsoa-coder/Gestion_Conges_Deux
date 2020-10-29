@@ -46,7 +46,11 @@
                          </div>
                      {% endif %}
                 </td>
-                <td></td>
+                <td>
+                    {% if absence.filename %}
+                        <img src="/images/piecesJointes/{{ absence.filename}}" alt="" width="80" height="80">
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('moderator_absence_show', {'id': absence.id}) }}">Voir</a>
                     <a href="{{ path('moderator_absence_edit', {'id': absence.id}) }}">Editer</a>

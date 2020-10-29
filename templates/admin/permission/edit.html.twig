@@ -3,7 +3,49 @@
 {% block title %}Edit Permission{% endblock %}
 
 {% block body %}
-    <h1>Edit Permission</h1>
+    <h1 class="mt-5 mb-5">Editer une Permission</h1>
+
+    <table class="table">
+        <tr>
+            <th>Id permission</th>
+            <td>{{ permission.id }}</td>
+        </tr>
+           <tr>
+            <th>Nom</th>
+            <td>
+                {{ permission.utilisateur.nom }} {{ permission.utilisateur.prenom }}
+            </td>
+        </tr>
+         <tr>
+            <th>Fonction</th>
+            <td>{{ permission.utilisateur.fonction }}</td>
+        </tr>
+        <tr>
+            <th>Date début</th>
+            <td>{{ permission.dateDebut ? permission.dateDebut | date('d/m/Y H:i:s') }}</td>
+        </tr>        
+        <tr>
+            <th>Date fin</th>
+            <td>{{ permission.dateFin ? permission.dateFin | date('d/m/Y H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Nombre de jours de permissions restants</th>
+            <td>{{ permission.utilisateur.nbPermissions| number_format(1, ',', ' ') }}</td>
+        </tr>
+        <tr>
+            <th>Contact</th>
+             <td>
+             {% if permission.utilisateur.telephone != (null) %} 
+                  {{ permission.utilisateur.telephone }} -
+              {% endif %}
+              {{ permission.utilisateur.email }}
+            </td>
+        </tr>
+        <tr>
+            <th>Motif</th>
+            <td>{{ permission.motif }}</td>
+        </tr>
+    </table>
 
     {{ include('permission/_form.html.twig', {'button_label': 'Update'}) }}
 

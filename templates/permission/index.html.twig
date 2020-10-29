@@ -3,12 +3,13 @@
 {% block title %}Permission index{% endblock %}
 
 {% block body %}
-    <h1>Permission index</h1>
+    <h1 style="text-align:center" class="mt-4"> Mes demandes de Permission </h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Utilisateur</th>
                 <th>Date_debut</th>
                 <th>Date_fin</th>
                 <th>Motif</th>
@@ -21,6 +22,11 @@
         {% for permission in permissions %}
             <tr>
                 <td>{{ permission.id }}</td>
+                <td>
+                    {{ permission.utilisateur.nom }}
+                    <br>
+                    {{ permission.utilisateur.prenom }}
+                </td>
                 <td>{{ permission.dateDebut ? permission.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.dateFin ? permission.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.motif }}</td>

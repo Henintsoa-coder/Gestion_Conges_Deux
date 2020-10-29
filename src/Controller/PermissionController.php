@@ -23,7 +23,7 @@ class PermissionController extends AbstractController
     public function index(PermissionRepository $permissionRepository): Response
     {
         return $this->render('permission/index.html.twig', [
-            'permissions' => $permissionRepository->findAll(),
+            'permissions' => $permissionRepository->findByUtilisateurId($this->getUser()?$this->getUser()->getId():'')
         ]);
     }
 

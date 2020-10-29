@@ -16,10 +16,10 @@ class AbsenceType extends AbstractType
             ->add('date_debut')
             ->add('date_fin')
             ->add('motif')
-            ->add('image', FileType::class, array(
-                'label' => 'Pièce jointe'
-                )
-            )
+            ->add('imageFile', FileType::class, [
+                'label' => 'Pièce jointe',
+                'required' => false
+            ])
             /*->add('created_at')
             ->add('utilisateur')*/
         ;

@@ -3,7 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Entity\Absence;
-use App\Form\AdminAbsenceType;
+use App\Form\admin\AdminAbsenceType;
 use App\Repository\AbsenceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
